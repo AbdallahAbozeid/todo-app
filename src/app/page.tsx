@@ -1,6 +1,6 @@
 "use client"
 import NewToDoForm from "./NewToDoForm";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import TasksList from "./TasksList";
 
 export default function Home() {
@@ -9,17 +9,18 @@ export default function Home() {
     id: string,
     completed: boolean
   }
-  const [tasks, setTasks] = useState<task[] | []>(() => {
-    const localTasks = localStorage.getItem("Tasks");
-    if (localTasks == null)
-      return [];
-    else
-      return JSON.parse(localTasks);
-  });
-  useEffect(() => {
-    localStorage.setItem("Tasks", JSON.stringify(tasks));
-  }, [tasks]);
+  const loaded = useRef<boolean>(false);
+  const [tasks, setTasks] = useState<task[] | []>([]);
 
+  useEffect(() => {
+    if (localStorage.getItem("Tasks") && !loaded.current) {
+      const localTasks = localStorage.getItem("Tasks");
+      setTasks(JSON.parse(localTasks || ""));
+    }
+    if (loaded.current)
+      localStorage.setItem("Tasks", JSON.stringify(tasks));
+    loaded.current = true;
+  }, [tasks]);
 
   function addTask(txt: string) {
     if (txt.replaceAll(" ", "") === "")
