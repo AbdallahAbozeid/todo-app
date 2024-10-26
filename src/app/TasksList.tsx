@@ -1,8 +1,16 @@
 "use client"
-
+import React from "react";
 import Task from "./Task";
+type taskObj = { id: string, text: string, completed: boolean };
+interface TasksListProps {
+    tasks: taskObj[];
+    moveup: (id: string) => void
+    movedown: (id: string) => void
+    deleteTask: (id: string) => void
+    doneHandler: (id: string, completed: boolean) => void
+}
 
-function TasksList({ tasks, moveup, movedown, deleteTask, doneHandler }) {
+const TasksList: React.FC<TasksListProps> = ({ tasks, moveup, movedown, deleteTask, doneHandler }) => {
 
     return (
         <ul className="tasks">

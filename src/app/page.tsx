@@ -2,7 +2,6 @@
 import NewToDoForm from "./NewToDoForm";
 import { useEffect, useState } from "react";
 import TasksList from "./TasksList";
-// import { console } from "inspector";
 
 export default function Home() {
   type task = {
@@ -47,7 +46,7 @@ export default function Home() {
     });
   }
   function moveup(id: string) {
-    const i: number = tasks.indexOf(...tasks.filter((task) => task.id === id));
+    const i: number = tasks.findIndex((task) => task.id === id);
     const newTasks: task[] = [...tasks];
     if (i > 0) {
       [newTasks[i - 1], newTasks[i]] = [newTasks[i], newTasks[i - 1]];
@@ -55,7 +54,7 @@ export default function Home() {
     setTasks(() => newTasks);
   }
   function movedown(id: string) {
-    const i: number = tasks.indexOf(...tasks.filter((task) => task.id === id));
+    const i: number = tasks.findIndex((task) => task.id === id);
     const newTasks: task[] = [...tasks];
     if (i < newTasks.length - 1) {
       [newTasks[i + 1], newTasks[i]] = [newTasks[i], newTasks[i + 1]];

@@ -1,7 +1,15 @@
 "use client"
-
-
-function Task({ id, completed, text, moveup, movedown, deleteTask, doneHandler }) {
+import React from "react";
+interface TaskProps {
+    id: string;
+    completed: boolean;
+    text: string;
+    moveup: (id: string) => void;
+    movedown: (id: string) => void;
+    deleteTask: (id: string) => void;
+    doneHandler: (id: string, completed: boolean) => void;
+}
+const Task: React.FC<TaskProps> = ({ id, completed, text, moveup, movedown, deleteTask, doneHandler }) => {
 
     return (
         <li className="task ">
@@ -17,5 +25,6 @@ function Task({ id, completed, text, moveup, movedown, deleteTask, doneHandler }
         </li>
     )
 }
+
 
 export default Task;
